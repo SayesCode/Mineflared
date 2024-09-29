@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mine Server</title>
+    <title>Markdown Viewer</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
@@ -14,18 +14,25 @@
     <div class="content" id="content"></div>
 
     <script>
-        const url = 'https://raw.githubusercontent.com/SayesCode/Mine-Server/refs/heads/main/README.md';
+        document.addEventListener("DOMContentLoaded", function() {
+            const url = 'https://raw.githubusercontent.com/SayesCode/Mine-Server/refs/heads/main/README.md';
 
-        fetch(url)
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('content').innerHTML = marked(data);
-            })
-            .catch(error => {
-                console.error('Error loading the file:', error);
-                document.getElementById('content').innerHTML = '<p>Error loading content.</p>';
-            });
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    const html = marked.parse(data);
+                    document.getElementById('content').innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Error loading the file:', error);
+                    document.getElementById('content').innerHTML = '<p>Error loading content.</p>';
+                });
+        });
     </script>
 </body>
 </html>
-
