@@ -31,7 +31,17 @@ fi
 # Update package list and install Java
 echo "Installing Java..."
 sudo apt update
-sudo apt install openjdk-17-jdk -y
+sudo apt install -y openjdk-17-jdk
+sudo apt install -y openjdk-17-jre
+sudo apt install -y libc6-x32 libc6-i386
+wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.deb
+sudo dpkg -i jdk-17_linux-x64_bin.deb
+sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk-17/bin/java 0;
+sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk-17/bin/javac 0;
+sudo update-alternatives --set java /usr/lib/jvm/jdk-17/bin/java;
+sudo update-alternatives --set javac /usr/lib/jvm/jdk-17/bin/javac
+java -version && javac -version
+
 
 # Download and unzip Cloudflared
 echo "Downloading Cloudflared..."
