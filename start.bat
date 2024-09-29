@@ -9,8 +9,8 @@ if %errorlevel% equ 0 (
     echo Chocolatey installed successfully.
 )
 
-:: Install Java version 22.0.2
-choco install jdk17 --version=22.0.2 -y
+:: Install Java version 17
+choco install jdk17
 
 :: Download and unzip Cloudflared
 echo Downloading Cloudflared...
