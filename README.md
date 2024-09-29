@@ -14,8 +14,9 @@
 
 Welcome to the Mine-Server project! This repository contains everything you need to set up and run your own Minecraft server using PaperMC and Cloudflared.
 
-*Linux's Workflow:*
-*Windows's Workflow:* 
+*Ubuntu's Workflow:* ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/SayesCode/Mine-Server/.github%2Fworkflows%2FUbuntu.yml)
+
+*Windows's Workflow:* ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/SayesCode/Mine-Server/.github%2Fworkflows%2FWindows.yml)
 
 `cloudflared` is a tool from Cloudflare that allows you to create a secure tunnel between your Minecraft server and Cloudflare's network. This protects you from DDoS attacks and hides your server's IP address, making it less vulnerable to hacking.
 
