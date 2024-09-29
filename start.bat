@@ -10,7 +10,7 @@ if %errorlevel% equ 0 (
 )
 
 :: Install Java version 17
-choco install jdk17
+choco install jdk17 -y
 
 :: Download and unzip Cloudflared
 echo Downloading Cloudflared...
