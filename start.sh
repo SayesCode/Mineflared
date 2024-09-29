@@ -36,13 +36,15 @@ install_cloudflared() {
 start_cloudflared() { 
     rm .cld.log > /dev/null 2>&1 &
     echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
-    
-    # Inicia o Cloudflared e aguarda a criação do log
-    { sleep 2; ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 & }
+
+    # Inicia o Cloudflared sem redirecionar o log
+    { sleep 2; ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log & }
     
     sleep 10  # Aumente o tempo de espera se necessário
 
+    # Verifica se o log foi criado e tenta ler a URL
     if [[ -e ".server/.cld.log" ]]; then
+        sleep 2  # Espera um pouco para garantir que o log tenha sido escrito
         cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log" | head -n 1)
         if [[ -z "$cldflr_url" ]]; then
             echo "No URL found in the log. Make sure Cloudflared is running properly."
