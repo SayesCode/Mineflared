@@ -13,6 +13,9 @@ download() {
 
 # Function to install Cloudflared
 install_cloudflared() { 
+    # Cria o diretório .server se não existir
+    mkdir -p .server
+
     if [[ -e ".server/cloudflared" ]]; then
         echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Cloudflared already installed."
     else
@@ -27,8 +30,16 @@ install_cloudflared() {
         else
             download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386' 'cloudflared'
         fi
+        
         chmod +x ./cloudflared
         mv ./cloudflared .server/cloudflared
+        
+        # Verifica se o arquivo foi movido corretamente
+        if [[ -e ".server/cloudflared" ]]; then
+            echo -e "${GREEN}[${WHITE}+${GREEN}]${CYAN} Cloudflared installed successfully."
+        else
+            echo -e "${RED}[${WHITE}--${RED}]${CYAN} Failed to move Cloudflared to .server directory."
+        fi
     fi
 }
 
