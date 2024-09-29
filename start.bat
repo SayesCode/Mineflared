@@ -7,12 +7,11 @@ if %errorlevel% neq 0 (
     powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 )
 
-:: Instalando Docker
+:: Instalação do Docker
 echo Instalando Docker...
 choco install docker-desktop -y
-choco install docker-compose
+choco install docker-compose -y
 
-:: Levantar os containers com Docker Compose
-echo Iniciando o Docker Compose...
-docker-compose build
-docker-compose up
+:: Criar um novo terminal para levantar os containers
+echo Iniciando o Docker Compose em um novo terminal...
+start cmd /k "docker-compose build && docker-compose up"
