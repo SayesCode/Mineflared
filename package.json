@@ -1,0 +1,26 @@
+{
+  "name": "mine-server",
+  "version": "1.0.0",
+  "description": "A Minecraft local server with Cloudflared",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SayesCode/Mine-Server.git"
+  },
+  "keywords": [
+    "Server"
+  ],
+  "author": "SayesCode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SayesCode/Mine-Server/issues"
+  },
+  "homepage": "https://github.com/SayesCode/Mine-Server#readme",
+  "dependencies": {
+    "minecraft-server-util": "^5.4.4"
+  }
+}
