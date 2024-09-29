@@ -2,10 +2,7 @@
 ![Relase](https://img.shields.io/github/v/release/SayesCode/Mine-Server)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/SayesCode/Mine-Server)
 ![GitHub License](https://img.shields.io/github/license/SayesCode/Mine-Server)
-### Workflows:
-1. Win
-2. Linux
-### Stars!
+
 ![GitHub Repo stars](https://img.shields.io/github/stars/SayesCode/Mine-Server)
 
 ## Powered by Paper Server
@@ -16,6 +13,9 @@
 </p>
 
 Welcome to the Mine-Server project! This repository contains everything you need to set up and run your own Minecraft server using PaperMC and Cloudflared.
+
+*Linux's Workflow:*
+*Windows's Workflow:* 
 
 `cloudflared` is a tool from Cloudflare that allows you to create a secure tunnel between your Minecraft server and Cloudflare's network. This protects you from DDoS attacks and hides your server's IP address, making it less vulnerable to hacking.
 
