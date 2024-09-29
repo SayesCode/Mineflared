@@ -36,7 +36,7 @@ To add plugins to your server, place the `.jar` files in the `plugins` directory
 
 ## Configuring the Server
 
-The server can be configured by editing the ![server.properties](https://github.com/SayesCode/Mine-Server/edit/main/server.properties) file. Here, you can adjust various settings such as server port, max players, and more.
+The server can be configured by editing the ![server.properties](https://github.com/SayesCode/Mine-Server/blob/main/server.properties) file. Here, you can adjust various settings such as server port, max players, and more.
 
 ## Running the Server
 
