@@ -35,9 +35,8 @@ install_cloudflared() {
 # Função para iniciar o Cloudflared
 start_cloudflared() { 
     rm .cld.log > /dev/null 2>&1 &
-    cusport
     echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
-    { sleep 1; setup_site; }
+    sleep 1
     echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
 
     if command -v termux-chroot &> /dev/null; then
@@ -47,29 +46,26 @@ start_cloudflared() {
     fi
 
     sleep 8
-    cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log")
-    custom_url "$cldflr_url"
-    capture_data
+    if [[ -e ".server/.cld.log" ]]; then
+        cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log")
+        echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Conecte-se ao servidor Minecraft usando o seguinte link: ${WHITE}$cldflr_url${CYAN}"
+    else
+        echo "Log file not found. Unable to retrieve Cloudflared URL."
+    fi
 }
 
 # Instalação do Java
 install_java() {
     echo "Installing Java..."
     sudo apt update
-    sudo apt install -y openjdk-17-jdk
-    sudo apt install -y openjdk-17-jre
-    sudo apt install -y libc6-x32 libc6-i386
-    wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.deb
-    sudo dpkg -i jdk-17_linux-x64_bin.deb
-    sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk-17/bin/java 0;
-    sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk-17/bin/javac 0;
-    sudo update-alternatives --set java /usr/lib/jvm/jdk-17/bin/java;
-    sudo update-alternatives --set javac /usr/lib/jvm/jdk-17/bin/javac
-    java -version && javac -version
-    } 
+    sudo apt install -y openjdk-17-jdk openjdk-17-jre libc6-x32 libc6-i386
+}
 
 # Função principal
 main() {
+    HOST="localhost"
+    PORT="25565" # Porta do seu servidor
+
     # Instala o Cloudflared
     install_cloudflared
 
@@ -78,9 +74,6 @@ main() {
 
     # Inicia o Cloudflared
     start_cloudflared
-
-    # Exibe o URL do Cloudflared
-    echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Conecte-se ao servidor Minecraft usando o seguinte link: ${WHITE}$cldflr_url${CYAN}"
 
     # Inicia o servidor Minecraft
     echo "Starting Minecraft server..."
