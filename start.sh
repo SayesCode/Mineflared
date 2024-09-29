@@ -27,8 +27,16 @@ install_cloudflared() {
         else
             download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386' 'cloudflared'
         fi
+        
         chmod +x ./cloudflared
         mv ./cloudflared .server/cloudflared
+        
+        # Verifica se o arquivo foi movido corretamente
+        if [[ -e ".server/cloudflared" ]]; then
+            echo -e "${GREEN}[${WHITE}+${GREEN}]${CYAN} Cloudflared installed successfully."
+        else
+            echo -e "${RED}[${WHITE}--${RED}]${CYAN} Failed to move Cloudflared to .server directory."
+        fi
     fi
 }
 
@@ -70,6 +78,12 @@ main() {
 
     # Instala o Cloudflared
     install_cloudflared
+
+    # Verifica a instalação do Cloudflared
+    if [[ ! -e ".server/cloudflared" ]]; then
+        echo -e "${RED}[${WHITE}--${RED}]${CYAN} Cloudflared not installed correctly. Exiting."
+        exit 1
+    fi
 
     # Instala o Java
     install_java
