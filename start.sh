@@ -1,17 +1,17 @@
 #!/bin/bash
 
-# Cores para o terminal
+# Terminal colors
 GREEN='\033[0;32m'
 WHITE='\033[0;37m'
 CYAN='\033[0;36m'
 RED='\033[0;31m'
 
-# Função para baixar arquivos
+# Function to download files
 download() {
     wget -q --show-progress -O "$2" "$1"
 }
 
-# Função para instalar o Cloudflared
+# Function to install Cloudflared
 install_cloudflared() { 
     if [[ -e ".server/cloudflared" ]]; then
         echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Cloudflared already installed."
@@ -32,17 +32,17 @@ install_cloudflared() {
     fi
 }
 
-# Função para iniciar o servidor HTTP
+# Function to start the HTTP server
 start_http_server() {
-    echo "Iniciando servidor HTTP para index.html na porta 8080..."
+    echo "Starting HTTP server for index.html on port 8080..."
     python3 -m http.server 8080 --directory "$(pwd)" > /dev/null 2>&1 &
 }
 
-# Função para iniciar o Cloudflared sem autenticação
+# Function to start Cloudflared without authentication
 start_cloudflared() { 
     echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
 
-    # Lança o Cloudflared para o redirecionamento
+    # Launch Cloudflared for redirection
     ./.server/cloudflared tunnel --url http://localhost:8080 --logfile .server/.cld.log > /dev/null 2>&1 &
     
     sleep 8
@@ -51,11 +51,11 @@ start_cloudflared() {
     if [ -z "$cldflr_url" ]; then
         echo -e "${RED}[${WHITE}--${RED}]${CYAN} Log file not found. Unable to retrieve Cloudflared URL."
     else
-        echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Conecte-se ao servidor Minecraft usando o seguinte link: ${WHITE}$cldflr_url:${RED}25565"
+        echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Connect to the Minecraft server using the following link: ${WHITE}$cldflr_url:${RED}25565"
     fi
 }
 
-# Instalação do Java
+# Java installation
 install_java() {
     echo "Detecting system architecture..."
     ARCH=$(uname -m)
@@ -86,36 +86,35 @@ install_java() {
     java -version
 }
 
-
-# Função principal
+# Main function
 main() {
     HOST="localhost"
-    PORT="25565" # Altere para a porta do seu servidor
+    PORT="25565" # Change to your server's port
 
-    # Instala o Cloudflared
+    # Install Cloudflared
     install_cloudflared
 
-    # Verifica a instalação do Cloudflared
+    # Check Cloudflared installation
     if [[ ! -e ".server/cloudflared" ]]; then
         echo -e "${RED}[${WHITE}--${RED}]${CYAN} Cloudflared not installed correctly. Exiting."
         exit 1
     fi
 
-    # Instala o Java
+    # Install Java
     install_java
     
-    # Inicia o servidor HTTP
+    # Start the HTTP server
     start_http_server
 
-    # Inicia o Cloudflared
+    # Start Cloudflared
     start_cloudflared
 
-    # Inicia o servidor Minecraft
+    # Start the Minecraft server
     echo "Starting Minecraft server..."
     java -Xmx1024M -Xms1024M -jar paper-1.21.1-110.jar nogui
 
     echo "Minecraft server started with Cloudflared IP."
 }
 
-# Executa a função principal
+# Execute the main function
 main
