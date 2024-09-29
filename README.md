@@ -30,9 +30,7 @@ All prerequisites are installed by `start.sh` or `start.bat`.
 
 To add plugins to your server, place the `.jar` files in the `plugins` directory:
 
-```
 ![Plugins](https://github.com/SayesCode/Mine-Server/tree/main/plugins)
-```
 
 ## Configuring the Server
 
