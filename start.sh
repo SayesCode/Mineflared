@@ -85,11 +85,11 @@ main() {
         exit 1
     fi
 
-    # Instala o Java
-    install_java
-
     # Inicia o Cloudflared
     start_cloudflared
+
+    # Instala o Java
+    install_java
 
     # Inicia o servidor Minecraft
     echo "Starting Minecraft server..."
