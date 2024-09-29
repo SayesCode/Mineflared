@@ -45,9 +45,7 @@ java -version && javac -version
 
 # Download and unzip Cloudflared
 echo "Downloading Cloudflared..."
-curl -L -o cloudflared.zip "https://github.com/cloudflare/cloudflared/archive/refs/heads/master.zip"
-echo "Unzipping Cloudflared..."
-unzip cloudflared.zip
+sudo apt install cloudflared
 
 # Start Cloudflared
 cd cloudflared-master
