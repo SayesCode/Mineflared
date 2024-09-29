@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Verison = "V1"
+
 # Terminal colors
 GREEN='\033[0;32m'
 WHITE='\033[0;37m'
