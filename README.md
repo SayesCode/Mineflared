@@ -1,7 +1,7 @@
 # Mine-Server
 
 ## Powered by Paper Server
-![https://papermc.io/downloads/paper](.github/assets/Paper.png)
+![https://papermc.io/downloads/paper](.github/assets/paper.png)
 
 Welcome to the Mine-Server project! This repository contains everything you need to set up and run your own Minecraft server using PaperMC and Cloudflared.
 
