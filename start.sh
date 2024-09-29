@@ -1,0 +1,61 @@
+#!/bin/bash
+
+# Function to install apt based on the distro
+install_apt() {
+    case $(lsb_release -si) in
+        Ubuntu|Debian)
+            echo "Updating package list..."
+            sudo apt update
+            ;;
+        Fedora|RHEL|CentOS)
+            echo "Installing apt via DNF..."
+            sudo dnf install apt -y
+            ;;
+        Arch)
+            echo "Installing apt via pacman..."
+            sudo pacman -S apt -y
+            ;;
+        *)
+            echo "Unsupported distribution. Please install apt manually."
+            exit 1
+            ;;
+    esac
+}
+
+# Check if apt is available
+if ! command -v apt &> /dev/null; then
+    echo "apt not found. Installing..."
+    install_apt
+fi
+
+# Update package list and install Java
+echo "Installing Java..."
+sudo apt update
+sudo apt install openjdk-17-jdk -y
+
+# Download and unzip Cloudflared
+echo "Downloading Cloudflared..."
+curl -L -o cloudflared.zip "https://github.com/cloudflare/cloudflared/archive/refs/heads/master.zip"
+echo "Unzipping Cloudflared..."
+unzip cloudflared.zip
+
+# Start Cloudflared
+cd cloudflared-master
+nohup ./cloudflared tunnel run &
+
+# Wait for Cloudflared to initialize
+echo "Waiting for Cloudflared to start..."
+sleep 10
+
+# Get the IP address of Cloudflared
+echo "Checking IP address..."
+cloudflared tunnel list
+
+# Go back to the previous directory
+cd ..
+
+# Run Minecraft server
+java -Xmx1024M -Xms1024M -jar paper-1.21.1-110.jar nogui
+
+echo "Minecraft server started with Cloudflared IP."
+
