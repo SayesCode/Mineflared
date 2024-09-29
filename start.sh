@@ -96,7 +96,7 @@ install_java() {
     tar -xzf "$FILENAME"
 
     echo "Installing Java..."
-    JDK_DIR=$(tar -tf "$FILENAME" | grep -o 'jdk-21[^/]*/' | head -n 1)
+    JDK_DIR=$(tar -tf "$FILENAME" | grep -o 'jdk-21[^/]*/' || true)
     sudo mv "$JDK_DIR" /usr/local/
     sudo update-alternatives --install /usr/bin/java java /usr/local/"$JDK_DIR"/bin/java 1
     sudo update-alternatives --install /usr/bin/javac javac /usr/local/"$JDK_DIR"/bin/javac 1
@@ -104,6 +104,7 @@ install_java() {
     echo "Java installed successfully!"
     java -version
 }
+
 
 
 # Main function
