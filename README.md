@@ -12,6 +12,12 @@
   </a>
 </p>
 
+## Runs-on:
+[![Runs](https://skillicons.dev/icons?i=windows,linux&theme=light)](https://skillicons.dev)
+
+## Will run!:
+[![Will Run](https://skillicons.dev/icons?i=windows,linux,docker,termux&theme=light)](https://skillicons.dev)
+
 Welcome to the Mine-Server project! This repository contains everything you need to set up and run your own Minecraft server using PaperMC and Cloudflared.
 
 *Ubuntu's Workflow:* ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/SayesCode/Mine-Server/.github%2Fworkflows%2FUbuntu.yml)
