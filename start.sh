@@ -43,12 +43,11 @@ sudo update-alternatives --set javac /usr/lib/jvm/jdk-17/bin/javac
 java -version && javac -version
 
 
-# Download and unzip Cloudflared
+# Download Cloudflared
 echo "Downloading Cloudflared..."
 sudo apt install cloudflared
 
 # Start Cloudflared
-cd cloudflared-master
 nohup ./cloudflared tunnel run &
 
 # Wait for Cloudflared to initialize
@@ -59,8 +58,6 @@ sleep 10
 echo "Checking IP address..."
 cloudflared tunnel list
 
-# Go back to the previous directory
-cd ..
 
 # Run Minecraft server
 java -Xmx1024M -Xms1024M -jar paper-1.21.1-110.jar nogui
