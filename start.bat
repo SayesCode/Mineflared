@@ -10,6 +10,7 @@ if %errorlevel% neq 0 (
 :: Instalando Docker
 echo Instalando Docker...
 choco install docker-desktop -y
+choco install docker-compose
 
 :: Levantar os containers com Docker Compose
 echo Iniciando o Docker Compose...
