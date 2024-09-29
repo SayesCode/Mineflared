@@ -57,10 +57,35 @@ start_cloudflared() {
 
 # Instalação do Java
 install_java() {
+    echo "Detecting system architecture..."
+    ARCH=$(uname -m)
+
+    if [[ "$ARCH" == "x86_64" ]]; then
+        echo "Installing Java 21 for x86_64..."
+        URL="https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.tar.gz"
+    elif [[ "$ARCH" == "aarch64" ]]; then
+        echo "Installing Java 21 for aarch64..."
+        URL="https://download.oracle.com/java/21/latest/jdk-21_linux-aarch64_bin.tar.gz"
+    else
+        echo "Unsupported architecture: $ARCH"
+        return 1
+    fi
+
+    echo "Downloading Java from $URL..."
+    wget $URL -O jdk-21.tar.gz
+
+    echo "Extracting files..."
+    tar -xzf jdk-21.tar.gz
+
     echo "Installing Java..."
-    sudo apt update
-    sudo apt install -y openjdk-17-jdk openjdk-17-jre libc6-x32 libc6-i386
+    sudo mv jdk-21 /usr/local/
+    sudo update-alternatives --install /usr/bin/java java /usr/local/jdk-21/bin/java 1
+    sudo update-alternatives --install /usr/bin/javac javac /usr/local/jdk-21/bin/javac 1
+
+    echo "Java installed successfully!"
+    java -version
 }
+
 
 # Função principal
 main() {
