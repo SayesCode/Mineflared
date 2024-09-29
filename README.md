@@ -3,7 +3,7 @@
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/SayesCode/Mine-Server)
 ![GitHub License](https://img.shields.io/github/license/SayesCode/Mine-Server)
 
-![GitHub Repo stars](https://img.shields.io/github/stars/SayesCode/Mine-Server)
+[![GitHub Repo stars](https://img.shields.io/github/stars/SayesCode/Mine-Server)](https://github.com/SayesCode/Mine-Server)
 
 ## Powered by Paper Server
 <p align="center">
