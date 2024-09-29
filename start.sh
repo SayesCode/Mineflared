@@ -36,19 +36,19 @@ install_cloudflared() {
 start_cloudflared() { 
     rm .cld.log > /dev/null 2>&1 &
     echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
-    sleep 1
-    echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
+    
+    # Inicia o Cloudflared e aguarda a criação do log
+    { sleep 2; ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 & }
+    
+    sleep 10  # Aumente o tempo de espera se necessário
 
-    if command -v termux-chroot &> /dev/null; then
-        sleep 2 && termux-chroot ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
-    else
-        sleep 2 && ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
-    fi
-
-    sleep 8
     if [[ -e ".server/.cld.log" ]]; then
-        cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log")
-        echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Conecte-se ao servidor Minecraft usando o seguinte link: ${WHITE}$cldflr_url${CYAN}"
+        cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log" | head -n 1)
+        if [[ -z "$cldflr_url" ]]; then
+            echo "No URL found in the log. Make sure Cloudflared is running properly."
+        else
+            echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Conecte-se ao servidor Minecraft usando o seguinte link: ${WHITE}$cldflr_url${CYAN}"
+        fi
     else
         echo "Log file not found. Unable to retrieve Cloudflared URL."
     fi
@@ -64,7 +64,7 @@ install_java() {
 # Função principal
 main() {
     HOST="localhost"
-    PORT="25565" # Porta do seu servidor
+    PORT="25565" # Altere para a porta do seu servidor
 
     # Instala o Cloudflared
     install_cloudflared
