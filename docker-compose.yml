@@ -1,0 +1,11 @@
+services:
+  mine-server:
+    image: ubuntu:latest
+    container_name: Mine-Server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: ["bash", "start.sh"]
