@@ -15,4 +15,5 @@ jobs:
 
       - name: Run
         run: |
+          chmod +x start.sh
           sudo bash ./start.sh
