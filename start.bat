@@ -14,14 +14,10 @@ choco install jdk17 -y
 
 :: Download and unzip Cloudflared
 echo Downloading Cloudflared...
-powershell -Command "Invoke-WebRequest -Uri 'https://github.com/cloudflare/cloudflared/archive/refs/heads/master.zip' -OutFile 'cloudflared.zip'"
-
-echo Unzipping Cloudflared...
-powershell -Command "Expand-Archive -Path 'cloudflared.zip' -DestinationPath '.'"
+choco install cloudflared
 
 :: Start Cloudflared
-cd cloudflared-master
-start cloudflared.exe tunnel run
+start cloudflared tunnel run
 
 :: Wait for Cloudflared to initialize
 echo Waiting for Cloudflared to start...
@@ -30,13 +26,10 @@ timeout /t 10 >nul
 :: Get the IP address of Cloudflared
 echo Checking IP address...
 setlocal enabledelayedexpansion
-for /f "tokens=*" %%i in ('cloudflared.exe tunnel list') do (
+for /f "tokens=*" %%i in ('cloudflared tunnel list') do (
     set "line=%%i"
     echo !line!
 )
-
-:: Go back to the previous directory
-cd ..
 
 :: Run Minecraft server
 java -Xmx1024M -Xms1024M -jar paper-1.21.1-110.jar nogui
