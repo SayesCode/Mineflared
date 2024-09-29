@@ -91,6 +91,9 @@ main() {
     # Instala o Java
     install_java
 
+    # Inicia o servidor HTTP
+    start_http_server
+
     # Inicia o Cloudflared
     start_cloudflared
 
