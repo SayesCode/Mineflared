@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/SayesCode/Mine-Server#readme",
   "dependencies": {
+    "express": "^4.21.0",
     "minecraft-server-util": "^5.4.4"
   }
 }
