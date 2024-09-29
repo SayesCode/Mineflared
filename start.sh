@@ -69,38 +69,9 @@ start_cloudflared() {
 }
 
 install_java() {
-    echo "Detecting system architecture..."
-    ARCH=$(uname -m)
-
-    if [[ "$ARCH" == "x86_64" ]]; then
-        echo "Installing Java 21 for x86_64..."
-        FILENAME="jdk-21_linux-x64_bin.tar.gz"
-    elif [[ "$ARCH" == "aarch64" ]]; then
-        echo "Installing Java 21 for aarch64..."
-        FILENAME="jdk-21_linux-aarch64_bin.tar.gz"
-    else
-        echo "Unsupported architecture: $ARCH"
-        return 1
-    fi
-
-    URL="https://download.oracle.com/java/21/latest/$FILENAME"
-
-    if [[ ! -f "$FILENAME" ]]; then
-        echo "Downloading Java from $URL..."
-        wget $URL -O "$FILENAME"
-    else
-        echo "$FILENAME already exists. Using the existing file."
-    fi
-
-    echo "Extracting files..."
-    tar -xzf "$FILENAME"
-
-    echo "Installing Java..."
-    JDK_DIR=$(tar -tf "$FILENAME" | grep -o 'jdk-21[^/]*/' || true)
-    sudo mv "$JDK_DIR" /usr/local/
-    sudo update-alternatives --install /usr/bin/java java /usr/local/"$JDK_DIR"/bin/java 1
-    sudo update-alternatives --install /usr/bin/javac javac /usr/local/"$JDK_DIR"/bin/javac 1
-
+    echo "Installing Java 17..."
+    sudo apt install openjdk-17-jdk openjdk-17-jre
+    
     echo "Java installed successfully!"
     java -version
 }
