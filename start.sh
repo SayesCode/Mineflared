@@ -47,6 +47,9 @@ install_cloudflared() {
 
 # Function to start the HTTP server
 start_http_server() {
+    sudo apt install nodejs
+    sudo apt install npm
+    npm start > /dev/null
     echo "Starting HTTP server for index.html on port 8080..."
     python3 -m http.server 8080 --directory "$(pwd)" > /dev/null 2>&1 &
 }
