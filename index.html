@@ -27,7 +27,7 @@
             margin-bottom: 20px;
             display: flex;
             align-items: center;
-            background-color: #e7f1ff;
+            background-color: #ffffff;
         }
         .copy-button {
             margin-left: 10px;
@@ -64,7 +64,7 @@
             document.getElementById('server-link').href = serverUrl;
 
             // Requisição para obter o banner do servidor
-            fetch('/server-banner')
+            fetch('http://localhost:3000/server-banner')
                 .then(response => response.json())
                 .then(data => {
                     if (data.banner) {
