@@ -1,8 +1,7 @@
-FROM ubuntu:latest
 FROM openjdk:17-jdk
-FROM openjdk:17-jre
 
-COPY .
+COPY . /root
+WORKDIR /root
 
 RUN chmod +x ./start.sh
 
