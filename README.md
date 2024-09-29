@@ -29,7 +29,11 @@ Welcome to the Mine-Server project! This repository contains everything you need
 
 2. **DDoS Protection**: When using the tunnel, your connection benefits from Cloudflare's DDoS protections. If an attack does occur, Cloudflare can mitigate the malicious traffic before it reaches your server.
 
-![Cloudflared](.github/assets/Cloud.png)
+<p align="center">
+  <a href="https://github.com/Cloudflare/Cloudflared">
+    <img src="https://github.com/SayesCode/Mine-Server/blob/main/.github/assets/Cloud.png?raw=true" alt="PaperMC" />
+  </a>
+</p>
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
@@ -71,4 +75,8 @@ bash start.sh
 ```
 
 Feel free to reach out if you have any questions or need assistance!
-![https://github.com/TheusLab/Mine-Server](.github/assets/Open.png)
+<p align="center">
+  <a href="https://github.com/TheusLab/Mine-Server">
+    <img src="https://github.com/SayesCode/Mine-Server/blob/main/.github/assets/Open.png?raw=true" alt="PaperMC" />
+  </a>
+</p>
