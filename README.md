@@ -1,4 +1,12 @@
 # Mine-Server
+![Relase](https://img.shields.io/github/v/release/SayesCode/Mine-Server)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/SayesCode/Mine-Server)
+![GitHub License](https://img.shields.io/github/license/SayesCode/Mine-Server)
+### Workflows:
+1. Win
+2. Linux
+### Stars!
+![GitHub Repo stars](https://img.shields.io/github/stars/SayesCode/Mine-Server)
 
 ## Powered by Paper Server
 <p align="center">
