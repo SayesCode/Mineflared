@@ -13,9 +13,6 @@ download() {
 
 # Função para instalar o Cloudflared
 install_cloudflared() { 
-    # Cria o diretório .server se não existir
-    mkdir -p .server
-
     if [[ -e ".server/cloudflared" ]]; then
         echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Cloudflared already installed."
     else
@@ -30,40 +27,31 @@ install_cloudflared() {
         else
             download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386' 'cloudflared'
         fi
-        
         chmod +x ./cloudflared
         mv ./cloudflared .server/cloudflared
-        
-        # Verifica se o arquivo foi movido corretamente
-        if [[ -e ".server/cloudflared" ]]; then
-            echo -e "${GREEN}[${WHITE}+${GREEN}]${CYAN} Cloudflared installed successfully."
-        else
-            echo -e "${RED}[${WHITE}--${RED}]${CYAN} Failed to move Cloudflared to .server directory."
-        fi
     fi
 }
 
-# Função para iniciar o Cloudflared
+# Função para iniciar o servidor HTTP
+start_http_server() {
+    echo "Iniciando servidor HTTP para index.html na porta 8080..."
+    python3 -m http.server 8080 --directory "$(pwd)" > /dev/null 2>&1 &
+}
+
+# Função para iniciar o Cloudflared sem autenticação
 start_cloudflared() { 
-    rm .cld.log > /dev/null 2>&1 &
-    echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
+    echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
 
-    # Inicia o Cloudflared sem redirecionar o log
-    { sleep 2; ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log & }
+    # Lança o Cloudflared para o redirecionamento
+    ./.server/cloudflared tunnel --url http://localhost:8080 --logfile .server/.cld.log > /dev/null 2>&1 &
     
-    sleep 10  # Aumente o tempo de espera se necessário
-
-    # Verifica se o log foi criado e tenta ler a URL
-    if [[ -e ".server/.cld.log" ]]; then
-        sleep 2  # Espera um pouco para garantir que o log tenha sido escrito
-        cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log" | head -n 1)
-        if [[ -z "$cldflr_url" ]]; then
-            echo "No URL found in the log. Make sure Cloudflared is running properly."
-        else
-            echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Conecte-se ao servidor Minecraft usando o seguinte link: ${WHITE}$cldflr_url${CYAN}"
-        fi
+    sleep 8
+    cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log" | head -n 1)
+    
+    if [ -z "$cldflr_url" ]; then
+        echo -e "${RED}[${WHITE}--${RED}]${CYAN} Log file not found. Unable to retrieve Cloudflared URL."
     else
-        echo "Log file not found. Unable to retrieve Cloudflared URL."
+        echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Conecte-se ao servidor Minecraft usando o seguinte link: ${WHITE}$cldflr_url:${RED}25565"
     fi
 }
 
@@ -90,7 +78,7 @@ main() {
 
     # Instala o Java
     install_java
-
+    
     # Inicia o servidor HTTP
     start_http_server
 
