@@ -12,12 +12,12 @@ if %errorlevel% equ 0 (
 :: Install Java version 17
 choco install jdk17 -y
 
-:: Download and unzip Cloudflared
+:: Download Cloudflared
 echo Downloading Cloudflared...
-choco install cloudflared
+choco install cloudflared -y
 
 :: Start Cloudflared
-start cloudflared tunnel run
+start cmd /c "cloudflared tunnel run"
 
 :: Wait for Cloudflared to initialize
 echo Waiting for Cloudflared to start...
