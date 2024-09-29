@@ -13,6 +13,9 @@ download() {
 
 # Função para instalar o Cloudflared
 install_cloudflared() { 
+    # Cria o diretório .server se não existir
+    mkdir -p .server
+
     if [[ -e ".server/cloudflared" ]]; then
         echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Cloudflared already installed."
     else
@@ -85,11 +88,11 @@ main() {
         exit 1
     fi
 
-    # Inicia o Cloudflared
-    start_cloudflared
-
     # Instala o Java
     install_java
+
+    # Inicia o Cloudflared
+    start_cloudflared
 
     # Inicia o servidor Minecraft
     echo "Starting Minecraft server..."
