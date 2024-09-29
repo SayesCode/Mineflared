@@ -71,6 +71,8 @@ start_cloudflared() {
 install_java() {
     echo "Installing Java 17..."
     sudo apt install openjdk-17-jdk openjdk-17-jre
+    export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+    source ~/.bashrc
     
     echo "Java installed successfully!"
     java -version
