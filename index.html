@@ -20,60 +20,15 @@
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .copy-box {
-            border: 1px solid #007BFF;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            background-color: #ffffff;
-        }
-        .copy-button {
-            margin-left: 10px;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007BFF;
-            color: white;
-            cursor: pointer;
-        }
-        .copy-button:hover {
-            background-color: #0056b3;
-        }
-        .banner {
-            max-width: 100%;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
-    <div class="copy-box">
-        <span id="server-url">Servidor: <a id="server-link" href="#"></a>:25565</span>
-        <button class="copy-button" id="copy-button">Copiar</button>
-    </div>
-    <img id="banner" class="banner" src="" alt="Banner do Servidor" />
-    <div class="content" id="content"></div>
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const url = 'https://raw.githubusercontent.com/SayesCode/Mine-Server/refs/heads/main/README.md';
             const serverUrl = window.location.origin;
             document.getElementById('server-link').innerText = serverUrl;
             document.getElementById('server-link').href = serverUrl;
-
-            // Requisição para obter o banner do servidor
-            fetch('http://localhost:3000/server-banner')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.banner) {
-                        document.getElementById('banner').src = data.banner.replace(/&amp;/g, '&'); // Corrigindo o formato
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro ao obter o banner:', error);
-                });
 
             fetch(url)
                 .then(response => {
@@ -91,14 +46,6 @@
                     document.getElementById('content').innerHTML = '<p>Error loading content.</p>';
                 });
 
-            document.getElementById('copy-button').addEventListener('click', function() {
-                const fullServerUrl = serverUrl + ':25565';
-                navigator.clipboard.writeText(fullServerUrl).then(() => {
-                    alert('URL copiada: ' + fullServerUrl);
-                }).catch(err => {
-                    console.error('Erro ao copiar: ', err);
-                });
-            });
         });
     </script>
 </body>
