@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node static/server.js"
+    "bot": "node utils/bot.js"
   },
   "repository": {
     "type": "git",
