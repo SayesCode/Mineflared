@@ -1,5 +1,4 @@
-
-# Mine-Server
+# Mineflared
 ![Relase](https://img.shields.io/github/v/release/SayesCode/Mine-Server)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/SayesCode/Mine-Server)
 ![GitHub License](https://img.shields.io/github/license/SayesCode/Mine-Server)
