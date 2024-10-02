@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mine Server - Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .content {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .server-info {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="server-info" id="server-info"></div> <!-- Server information will be displayed here -->
+    <div class="content" id="content">
+        <p>Loading content...</p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const readmeUrl = 'https://raw.githubusercontent.com/SayesCode/Mine-Server/refs/heads/main/README.md';
+            const serverStatusUrl = 'http://localhost:3000/mc-status'; // Updated to localhost:3000
+
+            // Function to load README.md
+            function loadReadme() {
+                fetch(readmeUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        const html = marked.parse(data);
+                        document.getElementById('content').innerHTML = html;
+                    })
+                    .catch(error => {
+                        console.error('Error loading the README:', error);
+                        document.getElementById('content').innerHTML = '<p>Error loading content.</p>';
+                    });
+            }
+
+            // First fetch server status
+            fetch(serverStatusUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Server not available');
+                    }
+                    return response.json();
+                })
+                .then(serverData => {
+                    // Populate the server information if available
+                    const serverInfoDiv = document.getElementById('server-info');
+                    const serverInfoHtml = `
+                        <div class="content">
+                            <h2>Minecraft Server Info</h2>
+                            <p><strong>MOTD:</strong> ${serverData.motd}</p>
+                            <p><strong>Version:</strong> ${serverData.version}</p>
+                            <p><strong>Players Online:</strong> ${serverData.playersOnline}/${serverData.maxPlayers}</p>
+                            <p><strong>Latency:</strong> ${serverData.latency}ms</p>
+                        </div>
+                    `;
+                    serverInfoDiv.innerHTML = serverInfoHtml;
+
+                    // After server info is displayed, load README.md
+                    loadReadme();
+                })
+                .catch(error => {
+                    console.warn('Server status fetch failed:', error);
+                    // If fetching server info fails, just load README.md
+                    loadReadme();
+                });
+        });
+    </script>
+</body>
+</html>

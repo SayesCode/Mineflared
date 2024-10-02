@@ -1,0 +1,17 @@
+name: Run Server on Windows
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-script:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run
+        run: .\start.cmd

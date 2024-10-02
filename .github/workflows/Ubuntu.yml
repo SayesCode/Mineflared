@@ -1,0 +1,30 @@
+name: Run Server on Ubuntu
+
+on:
+  push:
+    branches:
+      - main
+env:
+  DISCORD-BOT-TOKEN: ${{ secrets.DISCORD-BOT-TOKEN }}
+  DISCORD-SERVER-ID: ${{ secrets.DISCORD-SERVER-ID }}
+  DISCORD-CHAT-ID: ${{ secrets.DISCORD-CHAT-ID }}
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+ 
+      - name: Set up JDK 17 from AdoptOpenJDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+  
+      - name: Run bash shell
+        run: |
+          chmod +x start.sh
+          chmod +x build.sh
+          sudo bash ./build.sh
