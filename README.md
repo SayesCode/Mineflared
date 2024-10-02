@@ -54,7 +54,7 @@ To add plugins to your server, place the `.jar` files in the `plugins` directory
 [Plugins](https://github.com/SayesCode/Mine-Server/tree/main/plugins)
 
 > [!NOTE]
-> The server already has the `ViaVersion` plugin from [SpigotMC](https://www.spigotmc.org/resources/viaversion.19254/)
+> The server already has the `ViaVersion` plugin from [SpigotMC](https://www.spigotmc.org/resources/viaversion.19254/) and `ClearLag` plugin from [SpigotMC](https://www.spigotmc.org/resources/clearlagg.68271/)
 
 ## Configuring the Server
 
