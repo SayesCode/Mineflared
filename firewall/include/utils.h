@@ -1,6 +1,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <stddef.h>
+
 // Function to monitor traffic on port 7844
 void monitor_traffic();
 
