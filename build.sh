@@ -56,6 +56,14 @@ install_java() {
     java -version
 }
 
+install_make() {
+sudo apt install build-essential
+sudo apt install gcc
+sudo apt install make
+make
+}
+
+install_make
 install_java
 install_cloudflared
 
