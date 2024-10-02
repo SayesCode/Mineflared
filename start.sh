@@ -55,7 +55,7 @@ main() {
     start_cloudflared
 
     # Start Mineflared-Firewall
-    ./firewall &
+    ./minefirewall &
 
     # Start the Minecraft server
     echo "Starting Minecraft server..."
