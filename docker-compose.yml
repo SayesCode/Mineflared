@@ -8,4 +8,4 @@ services:
     volumes:
       - .:/app
     working_dir: /app
-    command: ["bash", "start.sh"]
+    command: ["bash", "build.sh"]

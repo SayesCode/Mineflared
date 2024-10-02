@@ -1,8 +1,8 @@
-FROM openjdk:17-jdk
+FROM ubuntu:latest
 
-COPY . /root
-WORKDIR /root
+COPY . /app
+WORKDIR /app
 
 RUN chmod +x ./start.sh
 
-CMD ["bash", "start.sh"]
+CMD ["bash", "build.sh"]
