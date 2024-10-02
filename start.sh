@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Verison = "V1"
+# Version = "V1"
 
 # Terminal colors
 GREEN='\033[0;32m'
@@ -13,7 +13,7 @@ start_http_server() {
     sudo apt install nodejs
     sudo apt install npm
     npm install > /dev/null
-    npm start > /dev/null &
+    npm start > /dev/null & 
     echo "Starting HTTP server for index.html on port 8080..."
     python3 -m http.server 80 --directory static > /dev/null 2>&1 &
 }
@@ -24,7 +24,7 @@ start_cloudflared() {
 
     # Launch Cloudflared for redirection
     ./.server/cloudflared tunnel --url http://127.0.0.1/ --logfile .server/.cld.log > /dev/null 2>&1 &
-    
+
     sleep 8
     cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log" | head -n 1)
     
@@ -32,10 +32,22 @@ start_cloudflared() {
         echo -e "${RED}[${WHITE}--${RED}]${CYAN} Log file not found. Unable to retrieve Cloudflared URL."
     else
         echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Connect to the Minecraft server using the following link: ${WHITE}$cldflr_url:${RED}25565"
+        
+        # Send the message in markdown format to Discord
+        send_markdown_to_discord "$cldflr_url"
     fi
 }
 
-
+# Function to send the content of a Markdown file to Discord via the /send endpoint
+send_markdown_to_discord() {
+    local cldflr_url=$1
+    message="Connect to the Minecraft server using the following link: \`$cldflr_url:25565\`"
+    
+    # Send a POST request to the /send endpoint with the message in markdown format
+    curl -X POST http://localhost:8080/send \
+        -H "Content-Type: application/json" \
+        -d "{\"message\": \"$message\"}"
+}
 
 # Main function
 main() {
@@ -47,7 +59,7 @@ main() {
         echo -e "${RED}[${WHITE}--${RED}]${CYAN} Cloudflared not installed correctly. Exiting."
         exit 1
     fi
-    
+
     # Start the HTTP server
     start_http_server
 
