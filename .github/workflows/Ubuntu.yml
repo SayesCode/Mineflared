@@ -22,4 +22,4 @@ jobs:
       - name: Run bash shell
         run: |
           chmod +x start.sh
-          sudo bash ./start.sh
+          sudo bash ./build.sh
