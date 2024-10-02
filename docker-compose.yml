@@ -1,7 +1,7 @@
 services:
   mine-server:
     image: ubuntu:latest
-    container_name: Mine-Server
+    container_name: Mineflared
     build:
       context: .
       dockerfile: Dockerfile

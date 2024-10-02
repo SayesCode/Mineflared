@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Verison = "V1"
+# Verison = "V2"
 
 # Terminal colors
 GREEN='\033[0;32m'
@@ -42,7 +42,6 @@ install_cloudflared() {
         chmod +x ./cloudflared
         mv ./cloudflared .server/cloudflared
         
-        # Verifica se o arquivo foi movido corretamente
         if [[ -e ".server/cloudflared" ]]; then
             echo -e "${GREEN}[${WHITE}+${GREEN}]${CYAN} Cloudflared installed successfully."
         else
@@ -74,5 +73,4 @@ install_make
 install_java
 install_cloudflared
 
-clear
 bash ./start.sh

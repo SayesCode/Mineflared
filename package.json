@@ -5,7 +5,7 @@
   "main": "static/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node static/server.js"
+    "start": "node static/server.js",
     "bot": "node utils/bot.js"
   },
   "repository": {
@@ -13,7 +13,8 @@
     "url": "git+https://github.com/SayesCode/Mine-Server.git"
   },
   "keywords": [
-    "Server"
+    "Server",
+    "Minecraft"
   ],
   "author": "SayesCode",
   "license": "MIT",
@@ -22,6 +23,9 @@
   },
   "homepage": "https://github.com/SayesCode/Mine-Server#readme",
   "dependencies": {
+    "cors": "^2.8.5",
+    "discord.js": "^14.16.3",
+    "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "minecraft-server-util": "^5.4.4"
   }

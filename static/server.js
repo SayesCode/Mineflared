@@ -1,5 +1,6 @@
 const express = require('express');
 const util = require('minecraft-server-util');
+const cors = require('cors');  // Importing CORS
 
 const app = express();
 const port = 3000; // Port for the Express server
@@ -7,6 +8,15 @@ const port = 3000; // Port for the Express server
 // Minecraft server IP and port
 const mcServerIP = '127.0.0.1';
 const mcServerPort = 25565;
+
+// CORS Configuration (allows requests from localhost)
+const corsOptions = {
+    origin: '127.0.0.1',
+    methods: 'GET,POST',
+    allowedHeaders: 'Content-Type',
+};
+
+app.use(cors(corsOptions)); // Applying CORS middleware
 
 // Endpoint to fetch Minecraft server status
 app.get('/mc-status', async (req, res) => {

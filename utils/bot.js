@@ -1,7 +1,7 @@
-// server.js
 const express = require('express');
 const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 const dotenv = require('dotenv');
+const cors = require('cors');  // Importing CORS
 
 // Load variables from the .env file
 dotenv.config({ path: '../mineflared.env' });
@@ -23,7 +23,15 @@ client.once('ready', () => {
 const app = express();
 app.use(express.json());
 
-// Endpoint to send message
+// CORS Configuration (allows requests from localhost)
+const corsOptions = {
+    origin: '127.0.0.1',
+    methods: 'GET,POST',
+    allowedHeaders: 'Content-Type',
+};
+app.use(cors(corsOptions)); // Applying CORS middleware
+
+// Endpoint to send a message
 app.post('/send', async (req, res) => {
   try {
     // Ensure the bot is connected
