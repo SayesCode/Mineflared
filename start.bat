@@ -4,8 +4,10 @@
 :check_installed
 where %1 >nul 2>nul
 if %errorlevel% neq 0 (
+    echo %1 not found. Exiting script.
     exit /b 1
 )
+echo %1 is installed.
 exit /b 0
 
 :: Install Chocolatey
