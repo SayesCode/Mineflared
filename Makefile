@@ -11,7 +11,7 @@ TEST_DIR = firewall/tests
 CONFIG_DIR = firewall/config
 
 # Output executable
-TARGET = firewall
+TARGET = minefirewall
 
 # Source files
 SRC_FILES = $(SRC_DIR)/main.c $(SRC_DIR)/rules.c $(SRC_DIR)/utils.c $(SRC_DIR)/firewall.c $(SRC_DIR)/logging.c
