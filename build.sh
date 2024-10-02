@@ -13,6 +13,13 @@ download() {
     wget -q --show-progress -O "$2" "$1"
 }
 
+check_arch() {
+arch=$(uname -m)
+  if [[ "$arch" == *"Android"* ]]; then
+    bash termux/termux.sh
+  fi
+}
+
 # Function to install Cloudflared
 install_cloudflared() { 
     mkdir -p .server
