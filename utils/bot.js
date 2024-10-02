@@ -2,15 +2,12 @@
 const express = require('express');
 const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 const dotenv = require('dotenv');
-const fs = require('fs');
-const path = require('path');
 
 // Load variables from the .env file
 dotenv.config({ path: '../mineflared.env' });
 
 // Discord bot configuration
 const botToken = process.env['DISCORD-BOT-TOKTEN'];
-const serverId = process.env['DISCORD-SERVER-ID'];
 const chatId = process.env['DISCORD-CHAT-ID'];
 
 // Initialize Discord client
@@ -26,7 +23,7 @@ client.once('ready', () => {
 const app = express();
 app.use(express.json());
 
-// Endpoint to send the .md file content as an embed
+// Endpoint to send message
 app.post('/send', async (req, res) => {
   try {
     // Ensure the bot is connected
@@ -34,26 +31,17 @@ app.post('/send', async (req, res) => {
       await client.login(botToken);
     }
 
-    // Extract the .md file path from the request body
-    const { filePath } = req.body;
+    const { message } = req.body;
 
-    // Check if filePath is provided and valid
-    if (!filePath || !fs.existsSync(filePath) || path.extname(filePath) !== '.md') {
-      return res.status(400).json({ message: 'Invalid .md file path' });
+    if (!message) {
+      return res.status(400).json({ message: 'No message provided' });
     }
-
-    // Read the file content
-    const fileContent = fs.readFileSync(filePath, 'utf-8');
 
     // Create an embed message for Discord
     const embed = new EmbedBuilder()
-      .setTitle('Markdown File Content')
-      .setDescription('The content of the Markdown file is below:')
+      .setTitle('Minecraft Server Link')
+      .setDescription('Server info:\n\n' + message)
       .setColor(0x00ff00)
-      .addFields({
-        name: 'File Content',
-        value: `\`\`\`md\n${fileContent}\n\`\`\``, // Enclose the markdown content in code block
-      })
       .setTimestamp();
 
     // Send the embed to the Discord channel
@@ -73,5 +61,5 @@ app.post('/send', async (req, res) => {
 // Start the server on port 8080
 const port = 8080;
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Bot running at http://localhost:${port}`);
 });
