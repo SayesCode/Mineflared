@@ -64,7 +64,7 @@ The server can be configured by editing the [server.properties](https://github.c
 
 ### Windows
 
-To run the server on Windows, execute the `start.bat` script. This will also install necessary dependencies and start Cloudflare:
+To run the server on Windows, execute the `start.bat` and `build.bat` script. This will also install necessary dependencies and start Cloudflare:
 
 ```bash
 start.bat
@@ -75,7 +75,7 @@ start.bat
 For Linux users, run the `start.sh` script:
 
 ```bash
-bash start.sh
+bash build.sh
 ```
 
 Feel free to reach out if you have any questions or need assistance!
