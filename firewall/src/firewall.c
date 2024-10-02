@@ -9,5 +9,6 @@ void start_firewall() {
     load_firewall_rules("../config/firewall.conf");
     
     // Start monitoring traffic on port 7844
-    monitor_traffic();
+    printf("Firewall started. Monitoring traffic...\n");
+    monitor_traffic(); // This function will run indefinitely
 }
