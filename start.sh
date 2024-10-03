@@ -8,12 +8,39 @@ WHITE='\033[0;37m'
 CYAN='\033[0;36m'
 RED='\033[0;31m'
 
+# Function to ensure venv is installed
+install_venv_if_needed() {
+    if ! dpkg -s python3-venv >/dev/null 2>&1; then
+        echo -e "${CYAN}Installing python3-venv package..."
+        sudo apt update
+        sudo apt install python3-venv -y
+    fi
+}
+
+# Function to create and activate virtual environment
+setup_virtualenv() {
+    # Install venv if necessary
+    install_venv_if_needed
+
+    # Create a virtual environment if it doesn't exist
+    if [ ! -d "venv" ]; then
+        echo -e "${CYAN}Creating Python virtual environment..."
+        python3 -m venv venv
+    fi
+
+    # Activate the virtual environment
+    echo -e "${CYAN}Activating virtual environment..."
+    source venv/bin/activate
+}
+
 # Function to start the HTTP server
 start_http_server() {
-    sudo apt install nodejs
-    sudo apt install npm
+    sudo apt install nodejs -y
+    sudo apt install npm -y
     npm install > /dev/null
-    npm start > /dev/null & 
+    npm start > /dev/null &
+    
+    # Install required Python packages inside the virtual environment
     pip3 install -r requirements.txt
     python3 utils/bot.py
     echo "Starting HTTP server for index.html on port 8080..."
@@ -61,6 +88,9 @@ main() {
         echo -e "${RED}[${WHITE}--${RED}]${CYAN} Cloudflared not installed correctly. Exiting."
         exit 1
     fi
+
+    # Set up the virtual environment
+    setup_virtualenv
 
     # Start the HTTP server
     start_http_server
