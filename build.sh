@@ -137,6 +137,7 @@ install_make() {
 }
 
 sudo apt install python3
+sudo apt install python3-pip
 sudo apt install curl
 install_make
 install_java
