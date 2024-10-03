@@ -3,10 +3,14 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 import asyncio
-from dotenv import load_dotenv
+import json
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables from env.json file
+def load_env_from_json(filepath):
+    with open(filepath, 'r') as f:
+        return json.load(f)
+
+env_vars = load_env_from_json('../env.json')
 
 # Define intents
 intents = discord.Intents.default()
@@ -17,14 +21,14 @@ intents.guilds = True
 bot = discord.Client(intents=intents)
 
 # Get the chat_id and bot_token
-chat_id = os.getenv('DISCORD_CHAT_ID')
+chat_id = env_vars.get('DISCORD_CHAT_ID')
 if chat_id is None:
-    raise ValueError("Environment variable 'DISCORD_CHAT_ID' is not set.")
+    raise ValueError("Key 'DISCORD_CHAT_ID' not found in env.json.")
 chat_id = int(chat_id)  # Now safe to convert to int
 
-bot_token = os.getenv('DISCORD_BOT_TOKEN')
+bot_token = env_vars.get('DISCORD_BOT_TOKEN')
 if bot_token is None:
-    raise ValueError("Environment variable 'DISCORD_BOT_TOKEN' is not set.")
+    raise ValueError("Key 'DISCORD_BOT_TOKEN' not found in env.json.")
 
 @bot.event
 async def on_ready():
