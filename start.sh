@@ -14,7 +14,8 @@ start_http_server() {
     sudo apt install npm
     npm install > /dev/null
     npm start > /dev/null & 
-    npm run bot > /dev/null & 
+    pip install -r requirements.txt
+    python3 utils/bot.py
     echo "Starting HTTP server for index.html on port 8080..."
     python3 -m http.server 80 --directory static > /dev/null 2>&1 &
 }
