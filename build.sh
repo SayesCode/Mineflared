@@ -136,6 +136,7 @@ install_make() {
     sudo apt install make -y
 }
 
+sudo apt install python3
 sudo apt install curl
 install_make
 install_java
