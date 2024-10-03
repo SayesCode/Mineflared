@@ -1,13 +1,20 @@
+import discord
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import discord
 import os
 import asyncio
 
-# Assuming you have already defined your bot and intents
+# Define intents
+intents = discord.Intents.default() 
+intents.messages = True  # Enable message-related events
+intents.guilds = True    # Enable guild-related events
+
+# Create the Discord bot with intents
 bot = discord.Client(intents=intents)
+
+# Ensure to define your chat_id and bot_token
 chat_id = int(os.getenv('DISCORD_CHAT_ID'))  # Ensure this is set correctly
-bot_token = os.getenv('DISCORD_BOT_TOKEN')  # Make sure this is set
+bot_token = os.getenv('DISCORD_BOT_TOKEN')  # Ensure this is set correctly
 
 @bot.event
 async def on_ready():
