@@ -43,8 +43,6 @@ start_http_server() {
     # Install required Python packages inside the virtual environment
     pip3 install -r requirements.txt
     python3 utils/bot.py &
-    echo "Starting HTTP server for index.html on port 8080..."
-    python3 -m http.server 80 --directory static > /dev/null 2>&1 &
 }
 
 # Function to start Cloudflared without authentication
@@ -52,7 +50,7 @@ start_cloudflared() {
     echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
 
     # Launch Cloudflared for redirection
-    ./.server/cloudflared tunnel --url http://127.0.0.1/ --logfile .server/.cld.log > /dev/null 2>&1 &
+    ./.server/cloudflared tunnel --url http://localhost:25565 --logfile .server/.cld.log > /dev/null 2>&1 &
 
     sleep 8
     cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log" | head -n 1)
@@ -60,7 +58,7 @@ start_cloudflared() {
     if [ -z "$cldflr_url" ]; then
         echo -e "${RED}[${WHITE}--${RED}]${CYAN} Log file not found. Unable to retrieve Cloudflared URL."
     else
-        echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Connect to the Minecraft server using the following link: ${WHITE}$cldflr_url:${RED}25565"
+        echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Connect to the Minecraft server using the following link: ${WHITE}$cldflr_url"
         
         # Send the message in markdown format to Discord
         send_markdown_to_discord "$cldflr_url"
