@@ -42,7 +42,7 @@ start_http_server() {
     
     # Install required Python packages inside the virtual environment
     pip3 install -r requirements.txt
-    python3 utils/bot.py
+    python3 utils/bot.py &
     echo "Starting HTTP server for index.html on port 8080..."
     python3 -m http.server 80 --directory static > /dev/null 2>&1 &
 }
