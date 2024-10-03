@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Version = "V1"
+# Version = "V2"
 
 # Terminal colors
 GREEN='\033[0;32m'
