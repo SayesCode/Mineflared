@@ -10,13 +10,6 @@ dotenv.config({ path: '../mineflared.env' });
 const botToken = process.env['DISCORD_BOT_TOKEN'];
 const chatId = process.env['DISCORD_CHAT_ID'];
 
-// Validate credentials
-if (!botToken || !chatId) {
-  console.log("Invalid credentials found in mineflared.env. Please make sure to set DISCORD_BOT_TOKEN and DISCORD_CHAT_ID.");
-  console.log("Update your mineflared.env file with the correct values.");
-  process.exit(1); // Exit the process if credentials are invalid
-}
-
 // Initialize Discord client
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
