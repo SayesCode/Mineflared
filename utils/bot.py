@@ -10,7 +10,7 @@ def load_env_from_json(filepath):
     with open(filepath, 'r') as f:
         return json.load(f)
 
-env_vars = load_env_from_json('../env.json')
+env_vars = load_env_from_json('env.json')
 
 # Define intents
 intents = discord.Intents.default()
