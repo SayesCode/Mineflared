@@ -1,24 +1,13 @@
-import os
-import discord
-from discord.ext import commands
 from flask import Flask, request, jsonify
-from dotenv import load_dotenv
 from flask_cors import CORS
+import discord
+import os
+import asyncio
 
-# Load variables from the .env file
-load_dotenv(dotenv_path='../mineflared.env')
-
-# Discord bot configuration
-bot_token = os.getenv('DISCORD_BOT_TOKEN')
-chat_id = int(os.getenv('DISCORD_CHAT_ID'))
-
-# Initialize the Discord client
-intents = discord.Intents.default()
-intents.guilds = True
-intents.guild_messages = True
-intents.message_content = True
-
-bot = commands.Bot(command_prefix='!', intents=intents)
+# Assuming you have already defined your bot and intents
+bot = discord.Client(intents=intents)
+chat_id = int(os.getenv('DISCORD_CHAT_ID'))  # Ensure this is set correctly
+bot_token = os.getenv('DISCORD_BOT_TOKEN')  # Make sure this is set
 
 @bot.event
 async def on_ready():
@@ -39,23 +28,23 @@ def send_message():
         if not message:
             return jsonify({'message': 'No message provided'}), 400
 
-        # Asynchronous function to send the message to the Discord channel
+        # Use asyncio to run the discord message sending
         async def send_discord_message():
             channel = bot.get_channel(chat_id)
-            if channel is not None:
-                embed = discord.Embed(
-                    title="Minecraft Server Link",
-                    description=f"Server info:\n\n{message}",
-                    color=discord.Color.green()
-                )
-                embed.timestamp = discord.utils.utcnow()
-
-                await channel.send(embed=embed)
-            else:
+            if channel is None:
                 return jsonify({'message': 'Channel not found!'}), 404
+            
+            embed = discord.Embed(
+                title="Minecraft Server Link",
+                description=f"Server info:\n\n{message}",
+                color=discord.Color.green()
+            )
+            embed.timestamp = discord.utils.utcnow()
+            await channel.send(embed=embed)
 
-        # Execute the message sending using asyncio
-        bot.loop.create_task(send_discord_message())
+        # Run the send_discord_message function
+        asyncio.run(send_discord_message())
+
         return jsonify({'message': 'Message sent successfully!'}), 200
 
     except Exception as error:
@@ -64,5 +53,9 @@ def send_message():
 
 # Start the Flask server on port 8080
 if __name__ == '__main__':
-    bot.loop.create_task(bot.start(bot_token))  # Start the Discord bot
+    # Start the Discord bot in a separate thread
+    loop = asyncio.get_event_loop()
+    loop.create_task(bot.start(bot_token))
+    
+    # Run the Flask app
     app.run(port=8080)
