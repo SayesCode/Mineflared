@@ -96,6 +96,8 @@ main() {
     # Start Cloudflared
     start_cloudflared
 
+    make
+
     # Start Mineflared-Firewall
     ./minefirewall &
 
