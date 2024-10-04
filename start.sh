@@ -101,6 +101,8 @@ main() {
     # Start Mineflared-Firewall
     ./minefirewall &
 
+    make test
+
     # Start the Minecraft server
     echo "Starting Minecraft server..."
     java -Xmx1024M -Xms1024M -jar paper-1.21.1-110.jar nogui
