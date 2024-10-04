@@ -1,8 +1,9 @@
+// test_rules.c
 #include "rules.h"
 #include <assert.h>
 #include <stdio.h>
 
-int main() {
+void run_tests() {
     load_firewall_rules("../config/firewall.conf");
     
     assert(is_allowed(7844, 80) == 1);        // Port 7844 to 80 should be allowed
@@ -10,5 +11,4 @@ int main() {
     assert(is_allowed(7844, 22) == 0);        // Port 7844 to 22 should be blocked
     
     printf("All rule tests passed.\n");
-    return 0;
 }
