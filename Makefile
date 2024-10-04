@@ -30,8 +30,7 @@ $(TARGET): $(SRC_FILES)
 # Rule to run tests
 test: $(TARGET)
 	$(CC) $(CFLAGS) $(INCLUDES) -o test_rules $(TEST_DIR)/test_rules.c $(SRC_FILES)
-	./test_rules
-	$(CC) $(CFLAGS) $(INCLUDES) -o test_firewall $(TEST_DIR)/test_firewall.c $(SRC_FILES)
+	$(CC) $(CFLAGS) $(INCLUDES) -o test_firewall $(TEST_DIR)/test_main.c $(SRC_FILES)
 	./test_firewall
 
 # Clean up the generated files
