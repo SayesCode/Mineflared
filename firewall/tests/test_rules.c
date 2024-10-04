@@ -1,5 +1,6 @@
 #include "rules.h"
 #include <assert.h>
+#include <stdio.h>
 
 int main() {
     load_firewall_rules("../config/firewall.conf");
