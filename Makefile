@@ -13,7 +13,7 @@ CONFIG_DIR = firewall/config
 # Output executable
 TARGET = minefirewall
 
-# Source files (exclude main.c for tests)
+# Source files (excluding main.c for tests)
 SRC_FILES = $(SRC_DIR)/rules.c $(SRC_DIR)/utils.c $(SRC_DIR)/firewall.c $(SRC_DIR)/logging.c
 TEST_FILES = $(TEST_DIR)/test_rules.c $(TEST_DIR)/test_firewall.c
 
@@ -34,4 +34,4 @@ test:
 
 # Clean up the generated files
 clean:
-	rm -f $(TARGET) test_rules test_firewall
+	rm -f $(TARGET) test_firewall
