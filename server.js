@@ -74,5 +74,7 @@ app.post('/upload-plugin', upload.single('plugin'), (req, res) => {
 // Start the Express server on port 3000
 app.listen(3000, () => {
     console.log('Minecraft server control panel running on port 3000.');
+
+    open('http://localhost:3000/index.php');
 });
 
