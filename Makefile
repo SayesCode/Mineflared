@@ -13,8 +13,8 @@ CONFIG_DIR = firewall/config
 # Output executable
 TARGET = minefirewall
 
-# Source files
-SRC_FILES = $(SRC_DIR)/main.c $(SRC_DIR)/rules.c $(SRC_DIR)/utils.c $(SRC_DIR)/firewall.c $(SRC_DIR)/logging.c
+# Source files (exclude main.c for tests)
+SRC_FILES = $(SRC_DIR)/rules.c $(SRC_DIR)/utils.c $(SRC_DIR)/firewall.c $(SRC_DIR)/logging.c
 TEST_FILES = $(TEST_DIR)/test_rules.c $(TEST_DIR)/test_firewall.c
 
 # Include headers
@@ -24,13 +24,12 @@ INCLUDES = -I$(INCLUDE_DIR)
 all: $(TARGET)
 
 # Rule to link the object files and create the executable
-$(TARGET): $(SRC_FILES)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $(TARGET) $(SRC_FILES)
+$(TARGET): $(SRC_DIR)/main.c $(SRC_FILES)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(TARGET) $(SRC_DIR)/main.c $(SRC_FILES)
 
-# Rule to run tests
-test: $(TARGET)
-	$(CC) $(CFLAGS) $(INCLUDES) -o test_rules $(TEST_DIR)/test_rules.c $(SRC_FILES)
-	$(CC) $(CFLAGS) $(INCLUDES) -o test_firewall $(TEST_DIR)/test_main.c $(SRC_FILES)
+# Rule to compile and run tests
+test:
+	$(CC) $(CFLAGS) $(INCLUDES) -o test_firewall $(TEST_FILES) $(SRC_FILES)
 	./test_firewall
 
 # Clean up the generated files
