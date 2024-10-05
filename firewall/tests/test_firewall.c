@@ -1,4 +1,4 @@
-#include "test_rules.c"
+#include "test_rules.h"
 
 int main() {
     run_tests();
