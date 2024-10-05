@@ -1,4 +1,3 @@
-// test_rules.c
 #include "rules.h"
 #include <assert.h>
 #include <stdio.h>
