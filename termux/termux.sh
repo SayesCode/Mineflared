@@ -1,3 +1,5 @@
+#!/bin/bash
+
 pkg update && pkg upgrade
 pkg install wget
 pkg install proot-distro
