@@ -4,6 +4,7 @@ from flask_cors import CORS
 import os
 import asyncio
 import json
+import threading
 
 # Load environment variables from env.json file
 def load_env_from_json(filepath):
@@ -20,19 +21,25 @@ intents.guilds = True
 # Create the Discord bot with intents
 bot = discord.Client(intents=intents)
 
-# Get the chat_id and bot_token
+# Get environment variables
+server_id = env_vars.get('DISCORD_SERVER_ID')
 chat_id = env_vars.get('DISCORD_CHAT_ID')
+bot_token = env_vars.get('DISCORD_BOT_TOKEN')
+
+if server_id is None:
+    raise ValueError("Key 'DISCORD_SERVER_ID' not found in env.json.")
 if chat_id is None:
     raise ValueError("Key 'DISCORD_CHAT_ID' not found in env.json.")
-chat_id = int(chat_id)  # Now safe to convert to int
-
-bot_token = env_vars.get('DISCORD_BOT_TOKEN')
 if bot_token is None:
     raise ValueError("Key 'DISCORD_BOT_TOKEN' not found in env.json.")
 
+# Ensure IDs are integers
+server_id = int(server_id)
+chat_id = int(chat_id)
+
 @bot.event
 async def on_ready():
-    print('Bot connected to Discord!')
+    print(f'Bot connected to Discord server with ID {server_id}.')
 
 # Create the Flask server
 app = Flask(__name__)
@@ -52,7 +59,7 @@ def send_message():
             channel = bot.get_channel(chat_id)
             if channel is None:
                 return jsonify({'message': 'Channel not found!'}), 404
-            
+
             embed = discord.Embed(
                 title="Minecraft Server Link",
                 description=f"Server info:\n\n{message}",
@@ -61,8 +68,8 @@ def send_message():
             embed.timestamp = discord.utils.utcnow()
             await channel.send(embed=embed)
 
-        # Run the send_discord_message function
-        asyncio.run(send_discord_message())
+        # Schedule the message to be sent asynchronously
+        asyncio.run_coroutine_threadsafe(send_discord_message(), asyncio.get_event_loop())
 
         return jsonify({'message': 'Message sent successfully!'}), 200
 
@@ -70,8 +77,16 @@ def send_message():
         print(f"Error sending message: {error}")
         return jsonify({'message': 'Internal error while sending message'}), 500
 
-# Start the Flask server on port 8080
-if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    loop.create_task(bot.start(bot_token))
+# Function to run Flask in a separate thread
+def run_flask():
     app.run(port=8080)
+
+# Start both the bot and the Flask server
+if __name__ == '__main__':
+    # Run Flask in a separate thread
+    flask_thread = threading.Thread(target=run_flask)
+    flask_thread.start()
+
+    # Run the bot on the main thread
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(bot.start(bot_token))
