@@ -3,6 +3,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const open = require('open');
 
 // Directories for server configuration
 const serverPropertiesPath = path.join(__dirname, '../server.properties');
