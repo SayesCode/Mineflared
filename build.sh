@@ -8,6 +8,8 @@ WHITE='\033[0;37m'
 CYAN='\033[0;36m'
 RED='\033[0;31m'
 
+apt install wget
+
 # Function to download files
 download() {
     wget -q --show-progress -O "$2" "$1"
@@ -105,19 +107,19 @@ install_java() {
     # Install JDK
     if [[ "$PACKAGE_TYPE" == "deb" ]]; then
         echo -e "${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing .deb package..."${WHITE}
-        sudo dpkg -i jdk-download
+        dpkg -i jdk-download
     elif [[ "$PACKAGE_TYPE" == "rpm" ]]; then
         echo -e "${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing .rpm package..."${WHITE}
-        sudo rpm -ivh jdk-download
+        rpm -ivh jdk-download
     elif [[ "$PACKAGE_TYPE" == "tar.gz" ]]; then
         echo -e "${GREEN}[${WHITE}+${GREEN}]${CYAN} Extracting .tar.gz file..."${WHITE}
         tar -xzf jdk-download
         echo -e "${GREEN}[${WHITE}+${GREEN}]${CYAN} Moving to /opt..."${WHITE}
-        sudo mv jdk-21.0.3 /opt/
+        mv jdk-21.0.3 /opt/
         echo -e "${GREEN}[${WHITE}+${GREEN}]${CYAN} Setting up environment variables..."${WHITE}
-        echo "export JAVA_HOME=/opt/jdk-21.0.3" | sudo tee -a /etc/profile.d/jdk.sh
-        echo "export PATH=\$PATH:\$JAVA_HOME/bin" | sudo tee -a /etc/profile.d/jdk.sh
-        source /etc/profile.d/jdk.sh
+        echo "export JAVA_HOME=/opt/jdk-21.0.3" >> ~/.bashrc
+        echo "export PATH=\$PATH:\$JAVA_HOME/bin" >> ~/.bashrc
+        source ~/.bashrc
     fi
 
     # Clean up
@@ -131,14 +133,14 @@ install_java() {
 }
 
 install_make() {
-    sudo apt install build-essential -y
-    sudo apt install gcc -y
-    sudo apt install make -y
+    apt install build-essential -y
+    apt install gcc -y
+    apt install make -y
 }
 
-sudo apt install python3
-sudo apt install python3-pip
-sudo apt install curl
+apt install python3
+apt install python3-pip
+apt install curl
 install_make
 install_java
 install_cloudflared
