@@ -1,4 +1,5 @@
 #include "rules.h"
+#include "test_rules.h"
 #include <assert.h>
 #include <stdio.h>
 
