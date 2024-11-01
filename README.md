@@ -43,7 +43,7 @@ Welcome to the Mine-Server project! This repository contains everything you need
 
 ## Prerequisites
 
-All prerequisites are installed by `start.sh` or `start.bat`.
+All prerequisites are installed by `build.sh` or `start.bat`.
 
 
 ## Adding Plugins
@@ -74,7 +74,7 @@ start.bat
 For Linux users, run the `start.sh` script:
 
 ```bash
-bash build.sh
+bash build.sh && start.sh
 ```
 
 Feel free to reach out if you have any questions or need assistance!
