@@ -43,6 +43,7 @@ start_http_server() {
     # Install required Python packages inside the virtual environment
     pip3 install -r requirements.txt
     python3 utils/bot.py &
+    python3 server.py &
 }
 
 # Function to start Cloudflared without authentication
@@ -68,7 +69,7 @@ start_cloudflared() {
 # Function to send the content of a Markdown file to Discord via the /send endpoint
 send_markdown_to_discord() {
     local cldflr_url=$1
-    message="Connect to the Minecraft server using the following link: \`$cldflr_url:25565\`"
+    message="Connect to the Minecraft server using the following link: \`$cldflr_url\`"
     
     # Send a POST request to the /send endpoint with the message in markdown format
     curl -X POST http://localhost:8080/send \
@@ -104,10 +105,10 @@ main() {
     make test
 
     # Start the Minecraft server
-    echo "Starting Minecraft server..."
+    echo "Minecraft server starting with Cloudflared IP."
+    echo "Open http://localhost:5000 for config page"
+    sleep 14s
     java -Xmx1024M -Xms1024M -jar paper-1.21.1-110.jar nogui
-
-    echo "Minecraft server started with Cloudflared IP."
 }
 
 # Execute the main function
